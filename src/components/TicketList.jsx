@@ -1,8 +1,7 @@
 import React from 'react';
 import Ticket from './Ticket';
 import PropTypes from 'prop-types';
-
-
+import Moment from 'moment';
 
 function TicketList(props){
   return (
@@ -16,17 +15,22 @@ function TicketList(props){
           formattedWaitTime={ticket.formattedWaitTime}
           currentRouterPath={props.currentRouterPath}
           key={ticketId}
-          onTicketSelection={props.onTicketSelection}
-          ticketId={ticketId}/>;
+          id={ticketId}/>;
       })}
     </div>
   );
 }
 
 TicketList.propTypes = {
-  ticketList: PropTypes.object,
+  ticketList: PropTypes.objectOf(PropTypes.shape({
+    names: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    issue: PropTypes.string,
+    timeOpen: PropTypes.instanceOf(Moment).isRequired,
+    id: PropTypes.string.isRequired,
+    formattedWaitTime: PropTypes.string.isRequired
+  })),
   currentRouterPath: PropTypes.string,
-  onTicketSelection: PropTypes.func
 };
 
 export default TicketList;
